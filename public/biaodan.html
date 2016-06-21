@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+</head>
+<body>
+	<input type="text" name="username" id="name"/>
+    <button id="submit">提交</button>
+
+    <script>
+       var submit   = document.getElementById('submit');
+       var username = document.getElementById('name');
+
+       submit.onclick = function(){
+       	  var xhr = new XMLHttpRequest();
+
+          var data = {
+            name: username.value
+          }
+
+       	  xhr.onreadystatechange = function(){
+       	  	if(xhr.readyState==4){
+       	  		if((xhr.status>=200 && xhr.status<300) || (xhr.status == 304)){
+       	  			var node = document.createElement('div');
+                node.innerText = xhr.responseText;
+                document.body.appendChild(node);
+       	  		} else{
+       	  			alert("Request was unseccessful: " + xhr.status);
+       	  		}
+       	  	}
+       	  };
+
+       	  xhr.open("post", "http://localhost:3000/addName", true)
+       	  // xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded")
+          xhr.setRequestHeader('Content-Type', 'application/json')
+       	  xhr.send(JSON.stringify(data));
+       }
+    </script>
+</body>
+</html>
