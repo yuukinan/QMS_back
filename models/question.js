@@ -7,12 +7,23 @@ var Question = sequelize.define('question', {
 		primaryKey: true,
 		allowNull: false,
 		autoIncrement: true
+	},
+	title: {
+		type: Sequelize.STRING,
+		allowNull: false
+	},
+	endTime: {
+		type: Sequelize.DATE,
+		allowNull: false
+	},
+	status: {
+		type: Sequelize.STRING
 	}
-})
+});
 
 //建表
-Question.sync({force: false}).then(function(){
+Question.sync({force: true}).then(function(){
 	console.log('create table: question successful')
 })
 
-exports.Question = Question
+module.exports = Question
