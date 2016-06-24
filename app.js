@@ -14,10 +14,34 @@ app.use(bodyParser.json())
 
 
 app.get('/detail',function(req,res){
+    res.header('Access-Control-Allow-Origin', '*')
+    var id = parseInt(req.query.id)
 
+    model.question.findAll({
+		where: {
+			id: id
+		}
+	}).then(function (data) {
+		console.log(data)
+		res.json({
+			data: data
+			result: {
+				code: 200,
+				msg: "success"
+			}
+		})
+	}, function (err) {
+		res.json({
+			result: {
+				code: 201,
+				msg: "fail"
+			}
+		})
+	})
 })
 
 app.get('/list',function(req,res){
+	res.header('Access-Control-Allow-Origin', '*')
 	model.question.findAll({
 		order: 'id DESC'
 	}).then(function (data) {
@@ -42,6 +66,7 @@ app.get('/list',function(req,res){
 })
 
 app.post('/addNew',function(req,res){
+	res.header('Access-Control-Allow-Origin', '*')
 	model.question.create(req.body).then(function(val){
 		res.json({
 		 data:{

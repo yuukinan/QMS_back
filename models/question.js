@@ -22,7 +22,7 @@ var Question = sequelize.define('question', {
 });
 
 //建表
-Question.sync({force: true}).then(function(){
+Question.sync({force: false}).then(function(){
 	console.log('create table: question successful')
 })
 
