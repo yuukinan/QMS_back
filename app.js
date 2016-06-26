@@ -24,7 +24,7 @@ app.get('/detail',function(req,res){
 	}).then(function (data) {
 		console.log(data)
 		res.json({
-			data: data
+			data: data,
 			result: {
 				code: 200,
 				msg: "success"
@@ -40,10 +40,35 @@ app.get('/detail',function(req,res){
 	})
 })
 
+app.get('/edit',function(req,res){
+	res.header('Access-Control-Allow-Origin', '*')
+	var id = parseInt(req.query.id)
+	model.question.findAll({
+		where: {
+			id: id
+		}
+	}).then(function (data){
+		res.json({
+			data: data,
+			result: {
+				code: 200,
+				msg: "success"
+			}
+		})
+	}, function (err){
+		res.json({
+			result: {
+				code: 201,
+				msg: "fail"
+			}
+		})
+	})
+})
+
 app.get('/list',function(req,res){
 	res.header('Access-Control-Allow-Origin', '*')
 	model.question.findAll({
-		order: 'id DESC'
+		order: 'id ASC'
 	}).then(function (data) {
 		console.log(data)
 		res.json({
@@ -86,9 +111,9 @@ app.post('/addNew',function(req,res){
 	})
 })
 
-app.post('/edit',function(req,res){
-
-})
+//app.post('/edit',function(req,res){
+//
+//})
 
  var server = app.listen(3000, function(){
  	var host = server.address().address;
