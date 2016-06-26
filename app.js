@@ -14,7 +14,28 @@ app.use(bodyParser.json())
 
 
 app.get('/detail',function(req,res){
+	var id = parseInt(req.query.id)
 
+	model.question.findAll({
+		where: {
+			id: id
+		}
+	}).then(function (data) {
+		res.json({
+			data: data,
+			result: {
+				code: 200,
+				msg: "success"
+			}
+		})
+	}, function (err) {
+		res.json({
+			result: {
+				code: 201,
+				msg: "fail"
+			}
+		})
+	})
 })
 
 app.get('/list',function(req,res){
